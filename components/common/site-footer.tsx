@@ -2,143 +2,157 @@
 
 import Link from "next/link";
 import { memo } from "react";
-import { Sofa, Mail, Phone, MapPin, Instagram, Facebook } from "lucide-react";
+import {
+  Globe,
+  Mail,
+  Phone,
+  MapPin,
+  Instagram,
+  Linkedin,
+  Twitter,
+} from "lucide-react";
 
 const navigation = {
-  collections: [
-    { name: "Living Room", href: "/collections/living-room" },
-    { name: "Dining Room", href: "/collections/dining-room" },
-    { name: "Bedroom", href: "/collections/bedroom" },
-    { name: "Lighting", href: "/collections/lighting" },
+  portfolio: [
+    { name: "Residential", href: "/portfolio/residential" },
+    { name: "Commercial", href: "/portfolio/commercial" },
+    { name: "Hospitality", href: "/portfolio/hospitality" },
+    { name: "Case Studies", href: "/portfolio/case-studies" },
   ],
   services: [
-    { name: "Design Services", href: "/services/design" },
-    { name: "Trade Program", href: "/trade" },
-    { name: "Financing", href: "/financing" },
-    { name: "White Glove Delivery", href: "/delivery" },
+    { name: "Interior Design", href: "/services/interior-design" },
+    { name: "Spatial Planning", href: "/services/spatial-planning" },
+    { name: "Concept Development", href: "/services/concept" },
+    { name: "Art Curation", href: "/services/art-curation" },
   ],
-  company: [
-    { name: "Our Story", href: "/story" },
-    { name: "Showrooms", href: "/showrooms" },
+  resources: [
+    { name: "Design Journal", href: "/journal" },
     { name: "Sustainability", href: "/sustainability" },
-    { name: "Careers", href: "/careers" },
+    { name: "Design Workshops", href: "/workshops" },
+    { name: "Press", href: "/press" },
   ],
   legal: [
     { name: "Privacy Policy", href: "/privacy" },
     { name: "Terms of Service", href: "/terms" },
+    { name: "Accessibility", href: "/accessibility" },
   ],
 };
 
 export const SiteFooter = memo(() => {
   return (
-    <footer className="border-t border-stone-200 bg-stone-50">
-      <div className="container mx-auto max-w-screen-xl py-12 px-4 md:px-8">
-        <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {/* Logo & About */}
+    <footer className="bg-neutral-900 text-neutral-100">
+      <div className="container mx-auto max-w-screen-xl px-4 md:px-8 py-16">
+        <div className="grid gap-12 md:grid-cols-4">
+          {/* Brand Introduction */}
           <div className="space-y-6">
-            <Link href="/" className="flex items-center space-x-2">
-              <Sofa className="h-8 w-8 text-amber-700" />
-              <span className="font-serif text-2xl">Redoak</span>
+            <Link href="/" className="flex items-center space-x-3">
+              <Globe className="h-8 w-8 text-emerald-500" />
+              <span className="font-serif text-2xl font-bold text-white">
+                K_T_P
+              </span>
             </Link>
-            <p className="text-stone-600 max-w-xs text-sm">
-              Crafting exceptional living spaces through timeless design and
-              unparalleled craftsmanship since 1992.
+            <p className="text-neutral-300 text-sm leading-relaxed">
+              Crafting extraordinary design narratives that transform spaces,
+              elevate experiences, and reflect the unique essence of each
+              client.
             </p>
             <div className="flex space-x-4">
-              <a href="#" aria-label="Instagram">
-                <Instagram className="h-5 w-5 text-stone-400 hover:text-amber-700" />
-              </a>
-              <a href="#" aria-label="Facebook">
-                <Facebook className="h-5 w-5 text-stone-400 hover:text-amber-700" />
-              </a>
+              {[
+                { Icon: Instagram, href: "#", label: "Instagram" },
+                { Icon: Linkedin, href: "#", label: "LinkedIn" },
+                { Icon: Twitter, href: "#", label: "Twitter" },
+              ].map(({ Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="text-neutral-400 hover:text-emerald-500 transition-colors"
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Collections */}
-          <div className="space-y-6">
-            <h3 className="font-serif text-lg">Collections</h3>
-            <ul className="space-y-3 text-sm">
-              {navigation.collections.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="text-stone-600 hover:text-amber-700"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div className="space-y-6">
-            <h3 className="font-serif text-lg">Services</h3>
-            <ul className="space-y-3 text-sm">
-              {navigation.services.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    className="text-stone-600 hover:text-amber-700"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Footer Columns */}
+          {[
+            { title: "Portfolio", items: navigation.portfolio },
+            { title: "Services", items: navigation.services },
+            { title: "Resources", items: navigation.resources },
+          ].map(({ title, items }) => (
+            <div key={title} className="space-y-6">
+              <h3 className="font-serif text-lg font-semibold text-white">
+                {title}
+              </h3>
+              <ul className="space-y-3">
+                {items.map((item) => (
+                  <li key={item.name}>
+                    <Link
+                      href={item.href}
+                      className="text-neutral-300 text-sm hover:text-emerald-500 transition-colors"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
           {/* Contact Information */}
           <div className="space-y-6">
-            <h3 className="font-serif text-lg">Contact</h3>
+            <h3 className="font-serif text-lg font-semibold text-white">
+              Contact
+            </h3>
             <ul className="space-y-4 text-sm">
               <li>
-                <div className="flex items-center space-x-2">
-                  <MapPin className="h-5 w-5 text-amber-700" />
-                  <span className="text-stone-600">
-                    123 Madison Avenue
+                <div className="flex items-center space-x-3">
+                  <MapPin className="h-5 w-5 text-emerald-500" />
+                  <span className="text-neutral-300">
+                    456 Design Avenue
                     <br />
-                    New York, NY 10001
+                    New York, NY 10012
                   </span>
                 </div>
               </li>
               <li>
                 <a
-                  href="tel:+18001234567"
-                  className="flex items-center space-x-2 text-stone-600 hover:text-amber-700"
+                  href="tel:+12125551234"
+                  className="flex items-center space-x-3 text-neutral-300 hover:text-emerald-500 transition-colors"
                 >
-                  <Phone className="h-5 w-5 text-amber-700" />
-                  <span>1-800-LUXURY</span>
+                  <Phone className="h-5 w-5 text-emerald-500" />
+                  <span>+1 (212) 555-1234</span>
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:contact@maison.com"
-                  className="flex items-center space-x-2 text-stone-600 hover:text-amber-700"
+                  href="mailto:hello@ktpinteriors.com"
+                  className="flex items-center space-x-3 text-neutral-300 hover:text-emerald-500 transition-colors"
                 >
-                  <Mail className="h-5 w-5 text-amber-700" />
-                  <span>contact@redoak.com</span>
+                  <Mail className="h-5 w-5 text-emerald-500" />
+                  <span>hello@ktpinteriors.com</span>
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Legal Links & Copyright */}
-        <div className="mt-12 border-t border-stone-200 pt-6 text-center text-sm text-stone-500">
-          <div className="flex flex-col items-center space-y-3 md:flex-row md:justify-center md:space-x-6 md:space-y-0">
+        {/* Copyright & Legal */}
+        <div className="mt-12 pt-6 border-t border-neutral-800 text-center">
+          <div className="flex flex-col md:flex-row justify-center items-center space-y-3 md:space-y-0 md:space-x-6">
             {navigation.legal.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="hover:text-amber-700"
+                className="text-neutral-400 text-sm hover:text-emerald-500 transition-colors"
               >
                 {item.name}
               </Link>
             ))}
           </div>
-          <p className="mt-4">
-            &copy; {new Date().getFullYear()} Redoak. All rights reserved.
+          <p className="mt-4 text-neutral-500 text-xs">
+            &copy; {new Date().getFullYear()} K_T_P Interiors. All rights
+            reserved.
           </p>
         </div>
       </div>

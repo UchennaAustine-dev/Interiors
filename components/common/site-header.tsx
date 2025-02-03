@@ -1,126 +1,176 @@
 "use client";
 
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sofa, Search, User, MapPin, Phone } from "lucide-react";
-import { motion } from "framer-motion";
+import { Menu, Search, User, Globe, FileText, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { CategoryNav } from "@/components/category-nav";
-import { MobileNav } from "@/components/mobile-nav";
-import { SearchDialog } from "@/components/search-dialog";
-import { Cart } from "@/components/cart";
 
 const mainNav = [
-  { title: "Collections", href: "/collections" },
-  { title: "Design Services", href: "/design-services" },
-  { title: "Showrooms", href: "/showrooms" },
-  { title: "Our Story", href: "/story" },
-  { title: "Trade Program", href: "/trade" },
+  {
+    title: "Portfolio",
+    href: "/portfolio",
+    icon: <Globe size={20} />,
+    description: "Explore our design masterpieces",
+  },
+  {
+    title: "Services",
+    href: "/services",
+    icon: <FileText size={20} />,
+    description: "Comprehensive interior design solutions",
+  },
+  {
+    title: "Approach",
+    href: "/approach",
+    icon: <User size={20} />,
+    description: "Our unique design philosophy",
+  },
+  {
+    title: "Consultations",
+    href: "/consultations",
+    icon: <Globe size={20} />,
+    description: "Book personalized design sessions",
+  },
+  {
+    title: "Journal",
+    href: "/journal",
+    icon: <FileText size={20} />,
+    description: "Design insights and inspiration",
+  },
 ];
 
 const SiteHeader = memo(() => {
   const pathname = usePathname();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-      {/* Top Bar */}
-      <div className="hidden border-b border-stone-200 bg-stone-50 py-2 lg:block">
-        <div className="container mx-auto flex max-w-screen-xl items-center justify-between px-4 md:px-8 text-sm text-stone-600">
-          <div className="flex items-center space-x-6">
-            <div className="flex items-center space-x-2">
-              <MapPin className="h-4 w-4 text-amber-700" />
-              <span>Find a Showroom</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Phone className="h-4 w-4 text-amber-700" />
-              <span>1-800-LUXURY</span>
-            </div>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Link href="/trade" className="hover:text-amber-700">
-              Trade Program
-            </Link>
-            <Link href="/financing" className="hover:text-amber-700">
-              Financing
-            </Link>
-          </div>
-        </div>
-      </div>
+    <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <Link
+          href="/"
+          className="text-2xl font-bold text-gray-800 hover:text-primary transition-colors"
+        >
+          K_T_P Interiors
+        </Link>
 
-      {/* Main Header */}
-      <div className="border-b border-stone-200">
-        <div className="container mx-auto flex max-w-screen-xl h-16 md:h-20 items-center justify-between px-4 md:px-8">
-          {/* Mobile Navigation */}
-          <div className="flex items-center lg:hidden">
-            <MobileNav />
-          </div>
-
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <Sofa className="h-8 w-8 text-amber-700" />
-            <span className="font-serif text-2xl font-medium">Redoak</span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex lg:space-x-8">
-            {mainNav.map((item) => (
-              <motion.div
-                key={item.href}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Link
-                  href={item.href}
-                  className={cn(
-                    "text-sm font-medium tracking-wide transition-colors hover:text-amber-700",
-                    pathname === item.href ? "text-amber-700" : "text-stone-600"
-                  )}
-                >
-                  {item.title}
-                </Link>
-              </motion.div>
-            ))}
-          </nav>
-
-          {/* Action Buttons */}
-          <div className="flex items-center space-x-3 md:space-x-4">
-            {/* Search Button */}
-            <SearchDialog>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hover:bg-stone-100 hover:text-amber-700"
-              >
-                <Search className="h-5 w-5" />
-                <span className="sr-only">Search</span>
-              </Button>
-            </SearchDialog>
-
-            {/* Account Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="hover:bg-stone-100 hover:text-amber-700"
-              asChild
+        <nav className="hidden md:flex items-center space-x-6">
+          {mainNav.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "group relative px-3 py-2 text-sm font-medium transition-colors",
+                pathname === item.href
+                  ? "text-primary"
+                  : "text-gray-600 hover:text-primary"
+              )}
             >
-              <Link href="/account">
-                <User className="h-5 w-5" />
-                <span className="sr-only">Account</span>
-              </Link>
-            </Button>
+              {item.title}
+              <span
+                className={cn(
+                  "absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform group-hover:scale-x-100",
+                  pathname === item.href ? "scale-x-100" : ""
+                )}
+              />
+            </Link>
+          ))}
+        </nav>
 
-            {/* Shopping Cart */}
-            <Cart />
-          </div>
+        <div className="flex items-center space-x-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:flex hidden"
+            aria-label="Search"
+          >
+            <Search size={20} />
+          </Button>
+
+          <Button variant="outline" className="hidden md:inline-flex">
+            Book Consultation
+          </Button>
+
+          <Button variant="secondary" className="hidden md:inline-flex">
+            <User size={16} className="mr-2" /> Account
+          </Button>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle mobile menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </Button>
         </div>
       </div>
 
-      {/* Category Navigation (Responsive) */}
-      <div className="container mx-auto max-w-screen-xl border-b border-stone-200 px-4 md:px-8">
-        <CategoryNav />
-      </div>
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 z-40 md:hidden"
+            onClick={closeMobileMenu}
+          >
+            <motion.nav
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween" }}
+              className="absolute right-0 top-0 w-64 h-full bg-white shadow-lg p-6"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex flex-col space-y-4">
+                {mainNav.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={closeMobileMenu}
+                    className={cn(
+                      "flex items-center space-x-3 px-3 py-2 rounded-md transition-colors",
+                      pathname === item.href
+                        ? "bg-primary/10 text-primary"
+                        : "hover:bg-gray-100"
+                    )}
+                  >
+                    {item.icon}
+                    <div>
+                      <div className="font-semibold">{item.title}</div>
+                      <p className="text-xs text-gray-500">
+                        {item.description}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              <div className="mt-6 space-y-3">
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={closeMobileMenu}
+                >
+                  <Search size={16} className="mr-2" /> Search
+                </Button>
+                <Button variant="default" className="w-full">
+                  Book Consultation
+                </Button>
+                <Button variant="secondary" className="w-full">
+                  <User size={16} className="mr-2" /> Account
+                </Button>
+              </div>
+            </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 });
