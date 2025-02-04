@@ -15,18 +15,18 @@ const NewsletterSection = () => {
   };
 
   return (
-    <section className="py-16 bg-emerald-50">
+    <section className="py-8 sm:py-16 bg-emerald-50">
       <div className="container mx-auto max-w-screen-xl px-4 md:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="bg-white rounded-2xl shadow-lg p-10 text-center"
+          className="bg-white rounded-2xl shadow-lg p-6 sm:p-10 text-center"
         >
-          <h2 className="text-4xl font-serif font-bold text-neutral-900 mb-4">
+          <h2 className="text-2xl sm:text-4xl font-serif font-bold text-neutral-900 mb-4">
             Stay Inspired
           </h2>
-          <p className="text-neutral-600 max-w-2xl mx-auto mb-8">
+          <p className="text-neutral-600 max-w-2xl mx-auto mb-6 sm:mb-8 text-sm sm:text-base">
             Join our design community and receive exclusive insights, trend
             reports, and behind-the-scenes glimpses of our creative process.
           </p>
@@ -34,7 +34,7 @@ const NewsletterSection = () => {
           {!submitted ? (
             <form
               onSubmit={handleSubmit}
-              className="max-w-lg mx-auto flex space-x-2"
+              className="max-w-lg mx-auto flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-2"
             >
               <input
                 type="email"
@@ -42,11 +42,11 @@ const NewsletterSection = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
                 required
-                className="flex-1 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full sm:flex-1 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
               <button
                 type="submit"
-                className="px-6 py-3 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 transition-colors flex items-center"
+                className="w-full sm:w-auto px-6 py-3 bg-emerald-700 text-white rounded-lg hover:bg-emerald-800 transition-colors flex items-center justify-center"
               >
                 <Send className="h-5 w-5 mr-2" />
                 Subscribe
